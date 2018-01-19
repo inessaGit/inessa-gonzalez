@@ -6,6 +6,7 @@
 *.exe
 *.o
 *.so
+# Eclipse artifacts, including WTP generated manifests
 
 *.classpath
 *.project
