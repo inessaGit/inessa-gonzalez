@@ -33,6 +33,7 @@
 - [Screen resolution and physical dimensions](https://mydevice.io/devices/)
 - [Android API support](https://developer.android.com/about/dashboards/index.html#OpenGL)
 - [Apple App store review](https://developer.apple.com/app-store/review/guidelines/)
+- [Google play stats on devices/OS] (https://developer.android.com/about/dashboards/index.html)
 
 Test type | Native iOS app | Native Android app | Web app | Web mobile optimized| Questions/Roadblocks
 ------------ | -------------|--------------|---------------|--------------------|---------------------
