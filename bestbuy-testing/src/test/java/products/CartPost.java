@@ -34,7 +34,7 @@ public class CartPost {
 //user inessa.08283@yopmail.com / nautica1 
 
 	@Test (invocationCount=5)
-	public void createCart() {				
+	public void createCartOathToken() {				
 		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
 		RestAssured.given().
 		queryParam("country", "de").
@@ -43,6 +43,54 @@ public class CartPost {
 		
 	}
 	
+	//https://api.dir.sf-test1.com/v1/shoppingCarts/826d6b55-f849-4e90-ae33-9c9b18f953ce?access_token=4b31781b-b359-4b89-ab72-d5dda644907d
+	@Test (invocationCount=1)
+	public void getCartOathToken() {				
+		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
+		RestAssured.given().
+		queryParam("shoppingCartUuid", "826d6b55-f849-4e90-ae33-9c9b18f953ce").
+		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d").
+		when().get(stageEndpoint).then().statusCode(200) ;	
+		
+	}
+	
+	@Test (invocationCount=1)
+	public void attachCartToConsumer() {				
+		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
+		RestAssured.given().
+		queryParam("shoppingCartUuid", "826d6b55-f849-4e90-ae33-9c9b18f953ce").
+		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d").
+		when().post(stageEndpoint).then().statusCode(200) ;	
+		
+	}
+	
+	@Test (invocationCount=3)
+	public void addItemsToCart() {				
+		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
+		RequestSpecification httpRequest =	RestAssured.given().
+		queryParam("shoppingCartUuid", "826d6b55-f849-4e90-ae33-9c9b18f953ce").
+		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d").
+		queryParam("productBundleUuid", "CamPackage_2018_06");
+		Response response = httpRequest.when().post(stageEndpoint); 
+		response.then().statusCode(200) ;	
+		ResponseBody body = response.getBody();
+		String bodyAsString = body.asString();
+		System.out.println(bodyAsString) ;
+	}
+	
+	@Test (invocationCount=1)
+	public void attachCartToConsumerGetResponse() {				
+		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
+		RequestSpecification httpRequest = RestAssured.given().
+		queryParam("shoppingCartUuid", "826d6b55-f849-4e90-ae33-9c9b18f953ce").
+		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d");
+		Response response = httpRequest.when().post(stageEndpoint) ;	
+		// Retrieve the body of the Response
+				ResponseBody body = response.getBody();
+				String bodyAsString = body.asString();
+				System.out.println(bodyAsString) ;
+		
+	}
 	@Test (invocationCount=1)
 	public void createCartGetResponse() {				
 		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
