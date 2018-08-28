@@ -106,6 +106,56 @@ public class User {
 		this.consumerProducts = consumerProducts;
 	}
 
+	public static User createTestUser() {
+		Address userAddress = new Address();
+		Address deliveryAddress = new Address();
+
+		userAddress.setCountry("DE");
+		userAddress.setZip("10117");
+		userAddress.setCity("Berlin");
+		userAddress.setStreet("Mohrenstr.");
+		userAddress.setHouseNumber("34");
+		userAddress.setAdditionalAddress("test");
+
+		deliveryAddress.setSalutation("Ms");
+		deliveryAddress.setFirstName("Inessa");
+		deliveryAddress.setName("Johnson");
+		deliveryAddress.setCompanyName("Test company");
+		deliveryAddress.setPhoneNumber("5894375943");
+		deliveryAddress.setMobilePhoneNumber("097436545");
+		deliveryAddress.setCountry("DE");
+		deliveryAddress.setZip("10117");
+		deliveryAddress.setCity("Berlin");
+		deliveryAddress.setStreet("Mohrenstr.");
+		deliveryAddress.setAdditionalAddress("test");
+		deliveryAddress.setHouseNumber("34");
+
+		List<Product> userProducts = new ArrayList<Product>();
+		Product product = new Product();
+		userProducts.add(product);
+		product.setExternalContractId(String.valueOf(System.currentTimeMillis()));
+		product.setProductName("LeasePackage_test");
+		product.setFulfillment(true);
+		product.setMacAddress(null);
+		product.setDeliverAddress(deliveryAddress);
+
+		User testUser = new User();
+		testUser.setTestAccount(true);
+		testUser.setSalutation("Mr");
+		testUser.setFirstName("Inessa");
+		testUser.setLastName("Last Name");
+		testUser.setMobilePhoneNumber("017634567");
+		testUser.setPhoneNumber("677899");
+		testUser.setExternalId(String.valueOf(System.currentTimeMillis()));
+		//mobilcomUser.setEmail("test.user+" + System.currentTimeMillis() + "@smartfrog.com");
+		
+		testUser.setEmail("test.user+" + System.currentTimeMillis() + "@yopmail.com");
+
+		testUser.setAddress(userAddress);
+		testUser.setConsumerProducts(userProducts);
+		return testUser;
+	}
+
 	public static User createMobilcomUserHotline() {
 		Address userAddress = new Address();
 		Address deliveryAddress = new Address();

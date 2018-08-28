@@ -32,17 +32,23 @@ public class CartPost {
 
 	@Test
 	public void postItemsToCart() {
-		User testUser = User.createMobilcomUserHotline();
+		User testUser = User.createTestUser();
 		
 		//String devEndpoint = "https://user-relay.dir.dev1.com/api/v1/mobilcom/accounts" ;
 		
 		String devEndpoint = "https://cc.sedoparking.com/api/v1/mobilcom/accounts" ;
 
-		String mobilcomActivationURL = RestAssured.given().header("Authorization", "Basic bW9iaWxjb206bW9iaWxjb206MDE=")
+	RestAssured.given().header("Authorization", "Basic bW9iaWxjb206bW9iaWxjb206MDE=")
+				.contentType("application/json; charset=UTF-8").body(testUser).when().post(devEndpoint).then()
+				.statusCode(200);
+		
+		/*
+		 * String url = RestAssured.given().header("Authorization", "Basic bW9iaWxjb206bW9iaWxjb206MDE=")
 				.contentType("application/json; charset=UTF-8").body(testUser).when().post(devEndpoint).then()
 				.statusCode(200).extract().path("activationUrl");
-		System.out.println(mobilcomActivationURL) ;
-		//return mobilcomActivationURL;
+				System.out.println(url) ;
+
+		 */
 	}
 	@Test
 	public void givenValidPostParameters_whenProductsPosted_then201IsReceived() throws ClientProtocolException, IOException {
