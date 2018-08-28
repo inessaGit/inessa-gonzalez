@@ -23,23 +23,30 @@ import objects.ProductNew;
 public class CartPost {
 
 	
-	private String basicUrl="https://www.sf-test1.com/v1/shoppingCarts/826d6b55-f849-4e90-ae33-9c9b18f953ce/items?productBundleUuid=CamPackage_2018_06&count=1";
+	private String basicUrl="https://www.sf-test1.com/v1/shoppingCarts/";
 	
-	//private String basicUrl="https://www.sf-test1.com/v1/shoppingCarts/";
 
 	
-	//POST /v1/shoppingCarts/{shoppingCartUuid}/items
-
+//	curl = "https://api.dir.sf-test1.com/v1/shoppingCarts?country=de&access_token=4b31781b-b359-4b89-ab72-d5dda644907d" ;
+	@Test
+	public void createCart() {				
+		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
+		RestAssured.given().
+		queryParam("country", "de").
+		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d").
+		when().post(stageEndpoint).then().statusCode(200) ;	
+		
+	}
 	@Test
 	public void postItemsToCart() {
 		User testUser = User.createTestUser();
 		
-		//String devEndpoint = "https://user-relay.dir.dev1.com/api/v1/mobilcom/accounts" ;
 		
-		String devEndpoint = "https://cc.sedoparking.com/api/v1/mobilcom/accounts" ;
+//		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts?country=de&access_token=4b31781b-b359-4b89-ab72-d5dda644907d" ;
+		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts?country=de&access_token=4b31781b-b359-4b89-ab72-d5dda644907d" ;
 
 	RestAssured.given().header("Authorization", "Basic bW9iaWxjb206bW9iaWxjb206MDE=")
-				.contentType("application/json; charset=UTF-8").body(testUser).when().post(devEndpoint).then()
+				.contentType("application/json; charset=UTF-8").body(testUser).when().post(stageEndpoint).then()
 				.statusCode(200);
 		
 		/*
