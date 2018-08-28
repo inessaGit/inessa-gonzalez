@@ -15,6 +15,9 @@ import org.testng.annotations.Test;
 import com.google.gson.Gson;
 
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
+import io.restassured.specification.RequestSpecification;
 import objects.Cart;
 import objects.User;
 
@@ -28,13 +31,31 @@ public class CartPost {
 
 	
 //	curl = "https://api.dir.sf-test1.com/v1/shoppingCarts?country=de&access_token=4b31781b-b359-4b89-ab72-d5dda644907d" ;
-	@Test
+//user inessa.08283@yopmail.com / nautica1 
+
+	@Test (invocationCount=5)
 	public void createCart() {				
 		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
 		RestAssured.given().
 		queryParam("country", "de").
 		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d").
 		when().post(stageEndpoint).then().statusCode(200) ;	
+		
+	}
+	
+	@Test (invocationCount=1)
+	public void createCartGetResponse() {				
+		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
+		
+		RequestSpecification httpRequest = RestAssured.given().
+				queryParam("country", "de").
+				queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d");
+		Response response = httpRequest.when().post(stageEndpoint);
+	 
+		// Retrieve the body of the Response
+		ResponseBody body = response.getBody();
+		String bodyAsString = body.asString();
+		System.out.println(bodyAsString) ;
 		
 	}
 	@Test
