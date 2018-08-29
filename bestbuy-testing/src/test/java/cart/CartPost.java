@@ -1,4 +1,4 @@
-package products;
+package cart;
 
 import java.io.IOException;
 
@@ -30,11 +30,14 @@ public class CartPost {
 	
     String stage_accessToken="550bec15-b49b-418b-bfe7-c56cb8554601";
     String stage_cartUuid ="7529ad9e-9348-4693-a8bc-223945261dab"; 
+    
+    String stage_invalid_accessToken="550bec15-b49b-418b-bfe7-c56cb8554666";
+
 	
 //	curl = "https://api.dir.sf-test1.com/v1/shoppingCarts?country=de&access_token=4b31781b-b359-4b89-ab72-d5dda644907d" ;
 //user inessa.08283@yopmail.com / nautica1 
 
-	@Test (invocationCount=5)
+	@Test (invocationCount=1)
 	public void createCartOathToken() {				
 		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
 		RestAssured.given().
@@ -44,6 +47,15 @@ public class CartPost {
 		
 	}
 	
+	@Test (invocationCount=1)
+	public void createCartInvalidOathToken() {				
+		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
+		RestAssured.given().
+		queryParam("country", "de").
+		queryParam("access_token", stage_invalid_accessToken).
+		when().post(stageEndpoint).then().statusCode(401) ;	//401 Unauthorized error
+		
+	}
 	//https://api.dir.sf-test1.com/v1/shoppingCarts/826d6b55-f849-4e90-ae33-9c9b18f953ce?access_token=4b31781b-b359-4b89-ab72-d5dda644907d
 	@Test (invocationCount=1)
 	public void getCartOathToken() {				
