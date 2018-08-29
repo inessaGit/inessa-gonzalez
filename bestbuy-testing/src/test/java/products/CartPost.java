@@ -28,7 +28,8 @@ public class CartPost {
 	
 	private String basicUrl="https://www.sf-test1.com/v1/shoppingCarts/";
 	
-
+    String stage_accessToken="550bec15-b49b-418b-bfe7-c56cb8554601";
+    String stage_cartUuid ="7529ad9e-9348-4693-a8bc-223945261dab"; 
 	
 //	curl = "https://api.dir.sf-test1.com/v1/shoppingCarts?country=de&access_token=4b31781b-b359-4b89-ab72-d5dda644907d" ;
 //user inessa.08283@yopmail.com / nautica1 
@@ -38,7 +39,7 @@ public class CartPost {
 		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
 		RestAssured.given().
 		queryParam("country", "de").
-		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d").
+		queryParam("access_token", stage_accessToken).
 		when().post(stageEndpoint).then().statusCode(200) ;	
 		
 	}
@@ -48,8 +49,8 @@ public class CartPost {
 	public void getCartOathToken() {				
 		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
 		RestAssured.given().
-		queryParam("shoppingCartUuid", "826d6b55-f849-4e90-ae33-9c9b18f953ce").
-		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d").
+		queryParam("shoppingCartUuid", stage_cartUuid).
+		queryParam("access_token", stage_accessToken).
 		when().get(stageEndpoint).then().statusCode(200) ;	
 		
 	}
@@ -58,19 +59,41 @@ public class CartPost {
 	public void attachCartToConsumer() {				
 		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
 		RestAssured.given().
-		queryParam("shoppingCartUuid", "826d6b55-f849-4e90-ae33-9c9b18f953ce").
-		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d").
+		queryParam("shoppingCartUuid", stage_cartUuid).
+		queryParam("access_token", stage_accessToken).
 		when().post(stageEndpoint).then().statusCode(200) ;	
 		
 	}
 	
-	@Test (invocationCount=3)
+	@Test (invocationCount=1)
+	public void addItemToCart() {				
+		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts/" ;
+		RequestSpecification httpRequest =	RestAssured.given().
+		queryParam("shoppingCartUuid", stage_cartUuid).
+		//queryParam("items", "?").
+		queryParam("productBundleUuid", "CamPackage_2018_06").
+		queryParam("access_token", stage_accessToken);
+
+
+		Response response = httpRequest.when().post(stageEndpoint); 
+		response.then().statusCode(200) ;	
+		ResponseBody body = response.getBody();
+		String bodyAsString = body.asString();
+		System.out.println(bodyAsString) ;
+
+	}
+	
+	@Test (invocationCount=1)
 	public void addItemsToCart() {				
 		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
 		RequestSpecification httpRequest =	RestAssured.given().
-		queryParam("shoppingCartUuid", "826d6b55-f849-4e90-ae33-9c9b18f953ce").
-		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d").
-		queryParam("productBundleUuid", "CamPackage_2018_06");
+		queryParam("shoppingCartUuid", stage_cartUuid).
+		queryParam("items", "?").
+		queryParam("productBundleUuid", "CamPackage_2018_06").
+		queryParam("productBundleUuid", "LeaseStorage_30d").
+		queryParam("productBundleUuid", "LeasePackage_1d").
+		queryParam("access_token", stage_accessToken);
+
 		Response response = httpRequest.when().post(stageEndpoint); 
 		response.then().statusCode(200) ;	
 		ResponseBody body = response.getBody();
@@ -82,8 +105,8 @@ public class CartPost {
 	public void attachCartToConsumerGetResponse() {				
 		String stageEndpoint = "https://api.dir.sf-test1.com/v1/shoppingCarts" ;
 		RequestSpecification httpRequest = RestAssured.given().
-		queryParam("shoppingCartUuid", "826d6b55-f849-4e90-ae33-9c9b18f953ce").
-		queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d");
+		queryParam("shoppingCartUuid", stage_cartUuid).
+		queryParam("access_token", stage_accessToken);
 		Response response = httpRequest.when().post(stageEndpoint) ;	
 		// Retrieve the body of the Response
 				ResponseBody body = response.getBody();
@@ -97,7 +120,7 @@ public class CartPost {
 		
 		RequestSpecification httpRequest = RestAssured.given().
 				queryParam("country", "de").
-				queryParam("access_token", "4b31781b-b359-4b89-ab72-d5dda644907d");
+				queryParam("access_token", stage_accessToken);
 		Response response = httpRequest.when().post(stageEndpoint);
 	 
 		// Retrieve the body of the Response

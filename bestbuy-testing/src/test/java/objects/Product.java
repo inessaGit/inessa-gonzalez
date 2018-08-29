@@ -2,7 +2,13 @@ package objects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+/*
+ * Product: 
+LeasePackage_1d
+LeaseStorage_30d
+CamPackage_2018_06
 
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Product {
     @JsonProperty("externalContractId")
